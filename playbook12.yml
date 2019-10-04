@@ -1,0 +1,21 @@
+---
+- name: Error Handling (exception handling)
+  hosts: all
+  tasks:
+   - block:
+      - name: Install tomcat7
+        apt:
+         name: tomcat7
+         state: present
+     rescue:
+      - name: Install tomcat8
+        apt:
+         name: tomcat8
+         state: present
+     always:
+      - name: Replace the port of tomcat
+        replace:
+         regexp: 8080
+         replace: 9090
+         path: /etc/tomcat8/server.xml
+...

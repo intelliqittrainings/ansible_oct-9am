@@ -1,0 +1,6 @@
+---
+- name: copy tomcat-users.xml file
+  copy:
+   src: tomcat-users.xml
+   dest: /etc/tomcat8
+...

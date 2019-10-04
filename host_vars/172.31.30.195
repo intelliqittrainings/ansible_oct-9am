@@ -1,0 +1,5 @@
+---
+a: openjdk-8-jdk
+b: present
+c: yes
+...

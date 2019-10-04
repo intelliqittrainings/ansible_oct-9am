@@ -1,0 +1,10 @@
+---
+- name: Installing java using host variables
+  hosts: 172.31.30.195
+  tasks:
+   - name: Installing java
+     apt:
+      name: "{{a}}"
+      state: "{{b}}"
+      update_cache: "{{c}}"
+

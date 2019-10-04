@@ -1,0 +1,4 @@
+<tomcat-users>
+	<user username="intelliq" password="myintelliq" roles="manager-script"/>
+</tomcat-users>
+

@@ -1,0 +1,13 @@
+---
+- name: Creating users and create files in users home dir
+  hosts: all
+  tasks:
+   - name: Creating user
+     user:
+      name: Basha
+      password: intelliq
+      home: /home/Basha
+   - name: Creating file in users home dir
+     file:
+      name: /home/Basha/file1
+      state: touch

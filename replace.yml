@@ -1,0 +1,7 @@
+---
+- name: Change port of tomat
+  replace:
+   regexp: 8888
+   replace: 9090
+   path: /etc/tomcat8/server.xml
+...

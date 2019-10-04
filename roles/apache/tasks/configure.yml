@@ -1,0 +1,7 @@
+---
+- name: Copy index.html into all managed nodes
+  copy:
+   src: index.html
+   dest: /var/www/html/
+  notify: Restart apache
+...

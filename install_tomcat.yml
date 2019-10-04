@@ -1,0 +1,9 @@
+---
+- name: Install tomcat8 and tomcat8-admin
+  apt:
+   name: "{{item}}"
+   state: present
+  with_items:
+   - tomcat8
+   - tomcat8-admin
+...

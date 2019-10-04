@@ -1,0 +1,51 @@
+---
+- name: Instalaling s/w packages for ci-cd
+  hosts: all
+  tasks:
+   - name: Install s/w's
+     apt:
+      name: "{{item.a}}"
+      state: present
+      update_cache: "{{item.b}}"
+     with_items:
+      - {a: openjdk-8-jdk,b: yes}
+      - {a: git,b: no}
+      - {a: maven,b: no}
+      - {a: tomcat8,b: no}
+      - {a: tomcat8-admin,b: no}
+- name: Continuous download and contniuos build
+  hosts: devserver
+  tasks:
+   - name: download the code from git
+     git:
+      repo: https://github.com/intelliqittrainings/maven.git
+      dest: /home/ubuntu/dev-git
+   - name: Create an arttifact from the downloaded code
+     shell: cd /home/ubuntu/dev-git;mvn package
+   - name: Fetch artifact from devserver to controller
+     fetch:
+      src: /home/ubuntu/dev-git/webapp/target/webapp.war
+      dest: /tmp
+- name: Continuous Deployment and contrinous testing
+  hosts: qaserver
+  tasks:
+   - name: copy artifact into tomcat on qaserver
+     copy:
+      src: /tmp/172.31.30.147/home/ubuntu/dev-git/webapp/target/webapp.war
+      dest: /var/lib/tomcat8/webapps/qaenv.war
+   - name: Downlaod the selenium programs and run them
+     git:
+      repo: https://github.com/selenium-saikrishna/FunctionalTesting.git
+      dest: /home/ubuntu/test-git
+   - name: run the selenium programs
+     shell: java -jar /home/ubuntu/test-git/testing.jar
+- name: Deploy the artifact into tomcat on prodserver
+  hosts: prodserver
+  tasks:
+   - name: copy artifact into prodserver
+     copy:
+      src: /tmp/172.31.30.147/home/ubuntu/dev-git/webapp/target/webapp.war
+      dest: /var/lib/tomcat8/webapps/prodenv.war
+...
+
+

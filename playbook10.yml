@@ -1,0 +1,21 @@
+---
+- name: Create multiple users and creste files/dirs in the users home dir
+  hosts: all
+  tasks:
+   - name: Create multiple users
+     user:
+      name: "{{item.a}}"
+      password: "{{item.b}}"
+      home: "{{item.c}}"
+     with_items:
+      - {a: Raju,b: intellq,c: /home/Raju}
+      - {a: Leela,b: intelliq,c: /home/Leela}
+   - name: Create files/dirs in users home dir
+     file:
+      name: "{{item.a}}"
+      state: "{{item.b}}"
+     with_items:
+      - {a: /home/Raju/file1,b: touch}
+      - {a: /home/Leela/dir1,b: directory}
+
+

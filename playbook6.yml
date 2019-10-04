@@ -1,0 +1,14 @@
+---
+- name: Installing S/w
+  hosts: all
+  vars:
+   - a: tomcat8
+   - b: present
+   - c: no
+  tasks:
+   - name: Install s/w using playscope varaibles
+     apt:
+      name: "{{a}}"
+      state: "{{b}}"
+      update_cache: "{{c}}"
+
